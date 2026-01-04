@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificador de Idade</title>
+</head>
+<body>
+
+  <h1>Maior ou Menor de Idade</h1>
+
+  <input
+    type="number"
+    id="idade"
+    placeholder="Digite sua idade"
+  >
+
+  <button onclick="verificarIdade()">
+    Verificar
+  </button>
+
+  <p id="resultado"></p>
+
+  <script>
+    function verificarIdade() {
+      const idade = document.getElementById("idade").value;
+
+      fetch(`/verificar?idade=${idade}`)
+        .then(response => response.text())
+        .then(texto => {
+          document.getElementById("resultado").innerText = texto;
+        });
+    }
+  </script>
+
+</body>
+</html>

@@ -4,35 +4,44 @@ Bun.serve({
   fetch(req) {
     const url = new URL(req.url);
 
-    // Rota inicial
+    // Servir o HTML
     if (url.pathname === "/") {
-      return new Response("Página inicialasd");
-    }
-
-    // Rota de lista
-    if (url.pathname === "/lista") {
-      return new Response("Lista de cadastros");
-    }
-
-    if (url.pathname === '/cadastro'){
-        return new Response('Tela de cadastro')
-     
-    }
-
-      if (url.pathname === '/post' && req.method === "POST"){
-       
-        const n1=Number(1);
-        const n2=Number(2);
-         
-        function soma(n1:number, n2:number):number{
-            return n1 + n2;
+      return new Response(
+        Bun.file("../frontend/index.html"),
+        {
+          headers: { "Content-Type": "text/html" }
         }
-        console.log(soma(n1, n2));
+      );
+    }
+  
+   
+    
+    if(url.pathname=== "/verificar"){
+      
+      const idade=(url.searchParams.get('idade'));
 
-        return new Response("Resultado"+ soma(n1,n2))
+      if (idade === null){
+  return new Response("Escreve algo certo")
+ }
+
+      const idadeNumero = Number(idade);
+
+
+ 
+ if(isNaN(idadeNumero)){
+return new  Response("Escreve algo valido")
+ }
+
+     if(idadeNumero>18){
+      return new Response("É maior");
+    }
+  else
+      return new Response("É menor");
+
+
+
     }
 
-
-    return new Response("Rota não encontrada", { status: 404 });
-  },
+    return new Response("Not Found", { status: 404 });
+  }
 });
